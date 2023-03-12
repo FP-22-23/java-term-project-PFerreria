@@ -16,7 +16,7 @@ The dataset used is [this one](https://www.kaggle.com/datasets/PromptCloudHQ/imd
 
 ## Implemented types
 
-# Base Type - HMovie
+### Base Type - HMovie
 Represents a movie. Properties (self-explanatory by their names):
 - title: String
 - genres: String
@@ -43,9 +43,9 @@ Represents a movie. Properties (self-explanatory by their names):
 **Other operations** 
 - getExpensePerMinute(): Gives the money spent per minute of the film.
 
-# Enum Type - HMLanguage
+### Enum Type - HMLanguage
 Languages the movies are:
 CHINESE, ENGLISH, FILIPINO, FRENCH, GERMAN, HINDI, ITALIAN, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, SPANISH, TURKISH, OTHER.
 
-# Record - Movie Nights
+### Record - Movie Nights
 Represents the nights each country has for movies
