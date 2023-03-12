@@ -8,7 +8,7 @@ The dataset used is [this one](https://www.kaggle.com/datasets/PromptCloudHQ/imd
 ## Structure of the project
 
 - /src Folder: Contains all the modules with the functions and tests:
-  -fp:
+  - fp:
     - types: Contains the types
       - test: Contains test functions
 - /data Folder:
