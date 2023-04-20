@@ -65,7 +65,7 @@ Equality Criterion: Two HMovies are equal if they contain the same movies.
 
 Operations:
 - Integer getNumberHMovies(): Returns the number of movies
-- addHMovie (HMovie h) / addHeroes(Collection): Adds a movie(s) to the collection
+- addHMovie (HMovie h) / addHMovies(Collection): Adds a movie(s) to the collection
 - removeHMovie(HMovie h): Removes a movie from the collection
 - Boolean containsMoviewithActor(String actor): True if there is a movie with that actor.
 - Boolean areMoviesGreaterThanScore(Double score): True if all movies have a score higher than the given one
