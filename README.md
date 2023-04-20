@@ -59,7 +59,7 @@ Represents days where movies have been premiered in certain countries
 - List parseCast (String cast): Parses the list of actors to an appropiate format
 - List parseGenres (String genres): Parses the list of genres to an appropiate format
 
-###Container Type - HMovies
+### Container Type - HMovies
 It can creates an empty collection, an object of type HMovies from the following parameter: Collection<HMovie> or an object of type HMovies.
 Equality Criterion: Two HMovies are equal if they contain the same movies.
 
