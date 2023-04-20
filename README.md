@@ -41,11 +41,37 @@ Represents a movie. Properties (self-explanatory by their names):
 **Natural Order:** By score and budget
 
 **Other operations** 
-- getExpensePerMinute(): Gives the money spent per minute of the film.
+- getExpensePerMinute(): Gives the money spent per minute of the film
+- getNumberActors(): Gives the number of cast members
+- addGenre(String hm) / addGenres(List lhm): Adds genre(s) to the list of genres
+- addActor(String hm) / addActors(List lhm): Adds actor(s) to the list of cast
 
 ### Enum Type - HMLanguage
 Languages the movies are:
 CHINESE, ENGLISH, FILIPINO, FRENCH, GERMAN, HINDI, ITALIAN, JAPANESE, KOREAN, PORTUGUESE, RUSSIAN, SPANISH, TURKISH, OTHER.
 
 ### Record - Movie Nights
-Represents the nights each country has for movies
+Represents days where movies have been premiered in certain countries
+
+###Factory - HMovieFactory
+- HMovie readHMovies (String fileName): Creates an object of type HMovie from a file
+- HMovie parseLine (String line): Creates an object of type HMovie from each line of a file
+- List parseCast (String cast): Parses the list of actors to an appropiate format
+- List parseGenres (String genres): Parses the list of genres to an appropiate format
+
+###Container Type - HMovies
+It can creates an empty collection, an object of type HMovies from the following parameter: Collection<HMovie> or an object of type HMovies.
+Equality Criterion: Two HMovies are equal if they contain the same movies.
+
+Operations:
+- Integer getNumberHMovies(): Returns the number of movies
+- addHMovie (HMovie h) / addHeroes(Collection): Adds a movie(s) to the collection
+- removeHMovie(HMovie h): Removes a movie from the collection
+- Boolean containsMoviewithActor(String actor): True if there is a movie with that actor.
+- Boolean areMoviesGreaterThanScore(Double score): True if all movies have a score higher than the given one
+- Integer countHMoviesFromCountry(String country): Counter of movies per country
+- Integer sumBudgetMovies(): Sums the budget of all movies of a certain genre
+- Double computeAverageScore(): Computes the average score of all movies
+- List getHMoviesOfGenre(String genre): Filters the movies by the given genre
+- Map<String, List> getMoviesbyLanguage(): Returns a map where the keys are languages and the keys are a list of movies of that language
+- Map<String, Integer> getMoviesbyCountry(): Returns a map where the keys are countries and the keys are the number of movies of that country
