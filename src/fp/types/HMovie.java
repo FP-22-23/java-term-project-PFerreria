@@ -8,7 +8,7 @@ import fp.utils.Checkers;
 
 public class HMovie {
 	private String title;
-	private String genres;
+	private List<String> genres;
 	private LocalDate relDate;
 	private String country;
 	private Boolean rated;
@@ -18,21 +18,22 @@ public class HMovie {
 	private HMLanguage language;
 	private Integer budget;
 	
-	public HMovie (String title, String genres, LocalDate relDate, String country, Double score, Integer duration, HMLanguage language, Integer budget) {
+	public HMovie (String title, List<String> genres, LocalDate relDate, String country, Double score, Integer duration, List<String> cast, HMLanguage language, Integer budget) {
 		Checkers.check("Error in title", title != null && title != "");
 		Checkers.check("Error in duration", duration > 0);
 		Checkers.check("Error in country", country != null);
 		this.title = title;
-		this.genres = genres;
+		this.genres = new ArrayList<>();
 		this.relDate = relDate;
 		this.country = country;
 		this.score = score;
 		this.duration = duration;
+		this.cast = new ArrayList<>();
 		this.language = language;
 		this.budget = budget;
 	}
 	
-	public HMovie (String title, LocalDate relDate, String country, Integer duration, Integer budget) {
+	public HMovie (String title, LocalDate relDate, String country, Integer duration) {
 		Checkers.check("Error in title", title != null && title != "");
 		Checkers.check("Error in duration", duration > 0);
 		Checkers.check("Error in country", country != null);
@@ -40,7 +41,6 @@ public class HMovie {
 		this.relDate = relDate;
 		this.country = country;
 		this.duration = duration;
-		this.budget = budget;
 	}
 	
 	public String getTitle() {
@@ -105,10 +105,21 @@ public class HMovie {
 		Checkers.check("Error in budget", budget > 0);
 		this.budget = budget;
 	}
-
-	//public Integer getNumberActors() {
-	//	return getCast().length();}
-	
+	public void addActor(String actor) {
+		cast.add(actor);
+	}
+	public void addActors(List<String> actors) {
+		cast.addAll(actors);
+	}
+	public void addGenre(String genre) {
+		genres.add(genre);
+	}
+	public void addGenres(List<String> genres) {
+		genres.addAll(genres);
+	}
+	public Integer getNumberActors() {
+		return getCast().size();
+	}
 	public Double getExpensePerMinute() {
 		return (double) (getBudget()/getDuration());
 	}
