@@ -1,6 +1,7 @@
 package fp.types;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,29 +19,33 @@ public class HMovie {
 	private HMLanguage language;
 	private Integer budget;
 	
-	public HMovie (String title, List<String> genres, LocalDate relDate, String country, Double score, Integer duration, List<String> cast, HMLanguage language, Integer budget) {
+	public HMovie (String title, List<String> genres, LocalDate relDate, String country, Boolean rated, Double score, Integer duration, List<String> cast, HMLanguage language, Integer budget) {
 		Checkers.check("Error in title", title != null && title != "");
+		Checkers.check("Error in date", relDate.isBefore(LocalDate.now()));
 		Checkers.check("Error in duration", duration > 0);
 		Checkers.check("Error in country", country != null);
 		this.title = title;
-		this.genres = new ArrayList<>();
+		this.genres = new ArrayList<>(genres);
 		this.relDate = relDate;
 		this.country = country;
+		this.rated = rated;
 		this.score = score;
 		this.duration = duration;
-		this.cast = new ArrayList<>();
+		this.cast = new ArrayList<>(cast);
 		this.language = language;
 		this.budget = budget;
 	}
 	
-	public HMovie (String title, LocalDate relDate, String country, Integer duration) {
+	public HMovie (String title, LocalDate relDate, String country, Integer duration, Integer budget) {
 		Checkers.check("Error in title", title != null && title != "");
+		Checkers.check("Error in date", relDate.isBefore(LocalDate.now()));
 		Checkers.check("Error in duration", duration > 0);
 		Checkers.check("Error in country", country != null);
 		this.title = title;
 		this.relDate = relDate;
 		this.country = country;
 		this.duration = duration;
+		this.budget = budget;
 	}
 	
 	public String getTitle() {
@@ -50,16 +55,17 @@ public class HMovie {
 		Checkers.check("Error in title", title != null && title != "");
 		this.title = title;
 	}
-	public String getGenres() {
+	public List<String> getGenres() {
 		return genres;
 	}
-	public void setGenres(String genres) {
+	public void setGenres(List<String> genres) {
 		this.genres = genres;
 	}
 	public LocalDate getRelDate() {
 		return relDate;
 	}
 	public void setRelDate(LocalDate relDate) {
+		Checkers.check("Error in date", relDate.isBefore(LocalDate.now()));
 		this.relDate = relDate;
 	}
 	public String getCountry() {
@@ -72,7 +78,9 @@ public class HMovie {
 	public Boolean getRated() {
 		return rated;
 	}
-	
+	public void setRated(Boolean rated) {
+		this.rated = rated;
+	}
 	public Double getScore() {
 		return score;
 	}
@@ -123,7 +131,12 @@ public class HMovie {
 	public Double getExpensePerMinute() {
 		return (double) (getBudget()/getDuration());
 	}
-	
+	public String getMainCharacter() {
+		return getCast().get(0);
+	}
+	public String getMainGenre() {
+		return getGenres().get(0);
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(title);
@@ -143,8 +156,8 @@ public class HMovie {
 
 	@Override
 	public String toString() {
-		return "Movie: " + title + ", straight from " + country + " (Starring " + getCast() + ", length: " + 
-				duration + ") OUT ON THE " + relDate + "for all the "+ getGenres() +" fans!";
+		return "Movie: " + title + ", straight from " + country + " (Starring " + cast + ", length: " + 
+				duration + ") OUT ON THE " + relDate + " for all the "+ genres +" fans!";
 	}
 	
 	public int compareTo(HMovie m) {

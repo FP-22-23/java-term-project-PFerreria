@@ -1,17 +1,23 @@
+package fp.types;
+
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import utils.Checkers;
+import fp.utils.*;
 
 public class HMovieFactory {
 	
+	/*DIRECT METHOD
 	public static HMovies readHMovies(String fileName) {
 		HMovies movies = null;
 		try {
-			Stream<HMovie> st = Files.lines(Paths.get(fileName)).skip(1).map(HMovieFactory::parseLine);
+			Stream<HMovie> m = Files.lines(Paths.get(fileName)).skip(1).map(HMovieFactory::parseLine);
 			movies = new HMovies(m);
 		}catch(IOException e) {
 			System.out.println("Error with the file " + fileName);
@@ -19,38 +25,58 @@ public class HMovieFactory {
 		}
 		return movies;
 	}
+	*/
+	
+	public static List<HMovie> readHMovieList(String fileName) {
+		List<HMovie> movies = null;
+		try {
+			Stream<HMovie> m = Files.lines(Paths.get(fileName)).skip(1).map(HMovieFactory::parseLine);
+			movies = new ArrayList<>(m.collect(Collectors.toList()));
+		}catch(IOException e) {
+			System.out.println("Error with the file " + fileName);
+			e.printStackTrace();
+		}
+		return movies;
+	}
+	
+	public static HMovies readHMovies(String fileName) {
+		return new HMovies(readHMovieList(fileName));
+	}
 	
 	public static HMovie parseLine(String line) {
 		String[] values = line.split(",");
-		Checkers.check("Error in line", values.length == 4);
+		Checkers.check("Error in line", values.length == 10);
 		String title = values[0].trim();
-		List<String> genres = parseGenres(values[1].trim());
-		LocalDate relDate = LocalDate.parse(values[2].trim(), DateTimeFormatter.ofPattern("dd/MM/YY"));
+		List<String> genres = parseCastGen(values[1].trim());
+		LocalDate relDate = parseDate(values[2].trim());
 		String country  = values[3].trim();
 		Boolean rated  = Boolean.valueOf(values[4].trim());
-		Double score  = Integer.valueOf(values[5].trim());
+		Double score  = Double.valueOf(values[5].trim());
 		Integer duration = Integer.valueOf(values[6].trim());
-		List<String> cast = parseCast(values[7].trim());
-		HMLanguage language = HMLanguage.valueOf(values[8].trim());
-		Integer budget = Integer.valueOf(fields[9].trim());
+		List<String> cast = parseCastGen(values[7].trim());
+		HMLanguage language = getUpperCaseName(values[8].trim());
+		Integer budget = Integer.valueOf(values[9].trim());
 		return new HMovie(title,genres,relDate,country,rated,score,duration,cast,language,budget);
 	}
 	
-	private static List<String> parseCast(String cast){
-		String[] values = cast.split("|");
+	private static LocalDate parseDate(String date){
+		return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	}
+	
+	private static List<String> parseCastGen(String castgen){
+		String[] values = castgen.split("\\|");
 		Checkers.check("The size can't be null", values.length>0);
 		List<String> castList = new ArrayList<>();
 		for(String actor:values) {
-	    	castList.add(actor);}
+	    	castList.add(actor.trim());}
 		return castList;
 	}
 	
-	private static List<String> parseGenres(String genres){
-		String[] values = cast.split("|");
-		Checkers.check("The size can't be null", values.length>0);
-		List<String> genresList = new ArrayList<>();
-		for(String genre:values) {
-	    	genresList.add(genres);}
-		return genresList;
+	public static HMLanguage getUpperCaseName(String lang) {
+	    if (lang == null || lang.isEmpty()) {
+	        return null;
+	    }
+	    return HMLanguage.valueOf(lang.toUpperCase());
 	}
+	
 }	
