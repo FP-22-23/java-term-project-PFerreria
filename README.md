@@ -74,6 +74,8 @@ Equality Criterion: Two HMovies are equal if they contain the same movies.
 - removeHMovie(HMovie h): Removes a movie from the collection
 
 Implemented both with loops and streams (stream operations are denoted with an ST at the end of the name): 
+- List<HMovie> filterByVar: Filters various variables (year, month, day, actor, genre, language and country)
+- Boolean doMoviesContain(String a): Checks if any titles contain the parameter
 - Boolean containsMoviewithActor(String actor): True if there is a movie with that actor.
 - Boolean areMoviesGreaterThanScore(Double score): True if all movies have a score higher than the given one
 - Integer countHMoviesFromCountry(String country): Counter of movies per country
@@ -89,5 +91,5 @@ Other operations:
 - Map<String, List<String>> getCheapestMovieOfActorOfEveryMainGenre(): Gives the cheapest movie of every main genre
 - Map<HMLanguage, String> getBestMoviesForLanguages(): Gives the best movie of each language
 - HMLanguage languageWithBestMovie(): Gives the language with the highest scored movie
--
--
+- Map<String, List<String>> getMovieOfEveryMainGenreOrdered(): Gives a map with ordered movies assigned to every genre
+- Map<String, List<String>> SortedMap<Integer, List<HMovie>> getMoviesByYearOrderedByScore(Integer n): Gives a ordered map with movies by year ordered by score
