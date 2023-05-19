@@ -37,6 +37,7 @@ Represents a movie. Properties (self-explanatory by their names):
 - R1: Title cannot be empty
 - R2: Budget cannot be 0 nor negative
 - R3: Duration cannot be 0 nor negative
+- R4: Release date has to be before today
 
 **Natural Order:** By score and budget
 
@@ -45,6 +46,8 @@ Represents a movie. Properties (self-explanatory by their names):
 - getNumberActors(): Gives the number of cast members
 - addGenre(String hm) / addGenres(List lhm): Adds genre(s) to the list of genres
 - addActor(String hm) / addActors(List lhm): Adds actor(s) to the list of cast
+- getMainCharacter(): Gets protagonist of the movie
+- getMainGenre(): Gets main genre of the movie
 
 ### Enum Type - HMLanguage
 Languages the movies are:
@@ -53,25 +56,38 @@ CHINESE, ENGLISH, FILIPINO, FRENCH, GERMAN, HINDI, ITALIAN, JAPANESE, KOREAN, PO
 ### Record - Movie Nights
 Represents days where movies have been premiered in certain countries
 
-###Factory - HMovieFactory
-- HMovie readHMovies (String fileName): Creates an object of type HMovie from a file
+### Factory - HMovieFactory
+- List<HMovie> readHMoviesList (String fileName): Creates an list of movies from a file
+- HMovies readHMovies(String fileName): Creates an object HMovies from a list of movies
 - HMovie parseLine (String line): Creates an object of type HMovie from each line of a file
-- List parseCast (String cast): Parses the list of actors to an appropiate format
-- List parseGenres (String genres): Parses the list of genres to an appropiate format
+- LocalDate parseDate(String date): Parses the dates of the movies
+- List<String> parseCast (String cast): Parses the list of actors and genres to an appropiate format
+- HMLanguage getUpperCaseName(String lang): Capitalises the language names
 
 ### Container Type - HMovies
 It can creates an empty collection, an object of type HMovies from the following parameter: Collection<HMovie> or an object of type HMovies.
 Equality Criterion: Two HMovies are equal if they contain the same movies.
 
-Operations:
+**Operations**
 - Integer getNumberHMovies(): Returns the number of movies
 - addHMovie (HMovie h) / addHMovies(Collection): Adds a movie(s) to the collection
 - removeHMovie(HMovie h): Removes a movie from the collection
+
+Implemented both with loops and streams (stream operations are denoted with an ST at the end of the name): 
 - Boolean containsMoviewithActor(String actor): True if there is a movie with that actor.
 - Boolean areMoviesGreaterThanScore(Double score): True if all movies have a score higher than the given one
 - Integer countHMoviesFromCountry(String country): Counter of movies per country
 - Integer sumBudgetMovies(): Sums the budget of all movies of a certain genre
 - Double computeAverageScore(): Computes the average score of all movies
 - List getHMoviesOfGenre(String genre): Filters the movies by the given genre
-- Map<String, List> getMoviesbyLanguage(): Returns a map where the keys are languages and the keys are a list of movies of that language
-- Map<String, Integer> getMoviesbyCountry(): Returns a map where the keys are countries and the keys are the number of movies of that country
+- Map<HMLanguage, Set<String>> getCountriesByLanguage(): Returns a map where the keys are languages and the keys are a list of movies of that language
+- Map<String, Long> getNMoviesbyCountry(): Returns a map where the keys are countries and the keys are the number of movies of that country
+  
+Other operations:
+- String getTitleOfMostExpensiveMovieOfCountry (String country): Returns the most expensive movie of a given country
+- List<HMovie> bestMoviesFromActorInAYear(String actor, Integer year): Gets the best movies from a given actor in a given year
+- Map<String, List<String>> getCheapestMovieOfActorOfEveryMainGenre(): Gives the cheapest movie of every main genre
+- Map<HMLanguage, String> getBestMoviesForLanguages(): Gives the best movie of each language
+- HMLanguage languageWithBestMovie(): Gives the language with the highest scored movie
+-
+-
