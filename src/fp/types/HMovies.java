@@ -308,11 +308,7 @@ public class HMovies {
 		//A method that returns a SortedMap in which the keys are an attribute or a function over an attribute, and the values are lists with the n best or worst elements that share the value of that attribute (or function over the attribute)
 		public SortedMap<Integer, List<HMovie>> getMoviesByYearOrderedByScore(Integer n) {
 		    SortedMap<Integer, List<HMovie>> auxiliar = hmovies.stream().collect(Collectors.groupingBy(h -> h.getRelDate().getYear(), TreeMap::new, Collectors.toList()));
-		    return auxiliar.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,e -> e.getValue().stream().sorted(Comparator.comparing(HMovie::getScore).reversed()).limit(n).toList(),(v1, v2) -> 
-		    {throw new IllegalStateException("Duplicate key encountered");
-                },
-                TreeMap::new
-        ));
+		    return auxiliar.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,e -> e.getValue().stream().sorted(Comparator.comparing(HMovie::getScore).reversed()).limit(n).toList(),(v1, v2) -> v1, TreeMap::new));
 		}
 		
 		//A method that calculates a Map and returns the key with the associated value (largest or smallest) of the entire Map: : Gives the language with the highest scored movie
